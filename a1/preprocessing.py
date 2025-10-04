@@ -3,6 +3,7 @@ import os
 import numpy as np
 import re
 import glob
+from sklearn.model_selection import train_test_split
 
 def canonicalize_name(name: str) -> str:
     name = name.lower()
@@ -37,3 +38,11 @@ def loadImages(rootDirectories, size=(100, 100)):
     images = np.array(images)
     labels = np.array(labels)
     return images, labels, labelMap
+
+def createSplit(rootDirectories, testSize=0.3, size=(100, 100), randomState=42):
+    X, y, labelMap = loadImages(rootDirectories, size=size)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testSize, random_state=randomState, stratify=y)
+    print(f"Total classes: {len(labelMap)}")
+    print(f"Train samples: {X_train.shape[0]}")
+    print(f"Test samples: {X_test.shape[0]}")
+    return X_train, X_test, y_train, y_test, labelMap
