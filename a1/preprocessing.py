@@ -18,9 +18,13 @@ def loadImages(dataDirectory, size=(100, 100)):
         
         for imageName in os.listdir(personPath):
             imagePath = os.path.join(personPath, imageName)
+            if not imagePath.lower().endswith(('.png', '.jpg', '.jpeg')):
+                continue
+
             image = cv2.imread(imagePath, cv2.IMREAD_GRAYSCALE)
             if image is None:
                 continue
+
             imageResized = cv2.resize(image, size)
             images.append(imageResized.flatten())
             labels.append(labelMap[person])
