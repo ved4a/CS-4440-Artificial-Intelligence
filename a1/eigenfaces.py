@@ -76,3 +76,18 @@ class Eigenfaces:
             distances = np.linalg.norm(trainProjection - testVector, axis=1)
             predictions.append(y_train[np.argmin(distances)])
         return np.array(predictions)
+
+    def save(self , path):
+        np.savez(path,
+                 meanFace=self.meanFace,
+                 eigenfaces=self.eigenfaces,
+                 eigenvalues=self.eigenvalues)
+    
+    @classmethod
+    def load(cls, path):
+        data = np.load(path)
+        model = cls()
+        model.meanFace = data['meanFace']
+        model.eigenfaces = data['eigenfaces']
+        model.eigenvalues = data['eigenvalues']
+        return model
