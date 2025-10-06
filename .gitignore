@@ -1,0 +1,8 @@
+# indian face dataset
+a1/indian-face-dataset/
+
+# subset of indian face dataset (no repeats)
+merged-faces/
+
+# celebA dataset
+celeb-a/
