@@ -5,10 +5,42 @@ import re
 import glob
 from sklearn.model_selection import train_test_split
 
-def canonicalize_name(name: str) -> str:
+# if the same person has 2 folders in diff formats -> standardize
+def canonicalizeName(name: str) -> str:
     name = name.lower()
     name = re.sub(r'[^a-z]', '', name)
     return name
+
+# for the instances that:
+#   i) train & val have images (& thus folders) of the same person
+#   ii) train has 1+ folders of the same person
+def mergeFolders(rootDirectories, tempMergedDirectory="merged_faces"):
+    if not os.path.exists(tempMergedDirectory):
+        os.makedirs(tempMergedDirectory)
+    
+    for rootDirectory in rootDirectories:
+        for person in os.listdir(rootDirectory):
+            personPath = os.path.join(rootDirectory, person)
+            if not os.path.isdir(personPath):
+                continue
+            
+            canonical = canonicalizeName(person)
+            mergedPersonPath = os.path.join(tempMergedDirectory, canonical)
+            os.makedirs(mergedPersonPath, exist_ok=True)
+
+            for ext in ("*.jpg", "*.png", ".jpeg"):
+                for imagePath in glob.glob(os.path.join(personPath, ext)):
+                    imageName = os.path.basename(imagePath)
+                    targetPath = os.path.join(mergedPersonPath, imageName)
+
+                    if not os.path.exists(targetPath):
+                        try:
+                            os.link(imagePath, targetPath)
+                        except:
+                            import shutil
+                            shutil.copy(imagePath, targetPath)
+    return tempMergedDirectory
+
 
 def loadImages(rootDirectories, size=(100, 100)):
     images, labels = [],[]
@@ -21,7 +53,7 @@ def loadImages(rootDirectories, size=(100, 100)):
             if not os.path.isdir(personPath):
                 continue
 
-            canonical = canonicalize_name(person)
+            canonical = canonicalizeName(person)
             if canonical not in labelMap:
                 labelMap[canonical] = counter
                 counter += 1
