@@ -58,3 +58,14 @@ class Eigenfaces:
     
     def reconstruct(self, coeffs):
         return coeffs @ self.eigenfaces.T + self.meanFace
+
+    def recognize(self, X_train, y_train, X_test):
+        print(">> Projecting training and test faces")
+        trainProjection = self.project(X_train)
+        testProjection = self.project(X_test)
+
+        predictions = []
+        for testVector in testProjection:
+            distances = np.linalg.norm(trainProjection - testVector, axis=1)
+            predictions.append(y_train[np.argmin(distances)])
+        return np.array(predictions)
