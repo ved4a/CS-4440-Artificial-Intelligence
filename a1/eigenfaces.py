@@ -8,27 +8,34 @@ class Eigenfaces:
         self.eigenvalues = None
 
     def fit(self, X):
-        print(">> Begin Eigenfaces training")
         print("Step 1: Compute mean face")
         self.meanFace = np.mean(X, axis=0)
         print("Mean face computed.")
 
         print("Step 2: Subtract mean")
         A = (X- self.meanFace).T
-        m = X.shape[0]
+        m, nPixels = X.shape
         print("Mean subtracted.")
 
-        print("Step 3: Compute small covariance matrix L = (1/m) * A^T * A")
-        L = (A.T @ A) / m
-        print("Covariance matrix L computed (size: {}x{}).".format(*L.shape))
+        if m < nPixels:
+            print("Step 3: Compute small covariance matrix L = (1/m) * A^T * A")
+            L = (A.T @ A) / m
+            print(f"Covariance matrix L computed (size: {L.shape[0]}x{L.shape[1]}).")
 
-        print("Step 4: Eigen decomposition of L")
-        eigenvalues, eigenvectorsSmall = np.linalg.eig(L)
-        print("Eigen decomposition complete.")
+            print("Step 4: Eigen decomposition of L")            
+            eigenvalues, eigenvectorsSmall = np.linalg.eigh(L)
+            print("Eigen decomposition complete.")
 
-        print("Step 5: Compute Eigenfaces from small Eigenvectors")
-        eigenfaces = A @ eigenvectorsSmall
-        print("Eigenfaces computed")
+            print("Step 5: Compute Eigenfaces from small Eigenvectors")
+            eigenfaces = A @ eigenvectorsSmall
+        else:
+            print("Step 3: Using C = (1/m) * A * A^T (size N^2 x N^2)")
+            C = (A @ A.T) / m
+            print(f"Covariance matrix C computed (size: {C.shape[0]}x{C.shape[1]}).")
+
+            print("Step 4 & 5: Eigen decomposition of C and compute Eigenfaces")
+            eigenvalues, eigenfaces = np.linalg.eigh(C)
+            print("Eigen decomposition and computation complete.")
 
         print("Step 6: Normalize Eigenfaces")
         eigenfaces = eigenfaces / np.linalg.norm(eigenfaces, axis=0, keepdims=True)
@@ -46,7 +53,7 @@ class Eigenfaces:
             eigenvalues = eigenvalues[:self.numComponents]
         self.eigenfaces = eigenfaces
         self.eigenvalues = eigenvalues
-        print("Retained {self.eigenfaces.shape[1]} Eigenfaces.")
+        print(f"Retained {self.eigenfaces.shape[1]} Eigenfaces.")
 
     def project(self, X):
         if self.meanFace is None or self.eigenfaces is None:
