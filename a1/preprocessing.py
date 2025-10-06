@@ -98,11 +98,7 @@ def loadImages(rootDirectories, size=(100, 100)):
 def createSplit(rootDirectories, testSize=0.3, size=(100, 100), randomState=42):
     X, y, labelMap = loadImages(rootDirectories, size=size)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=testSize, random_state=randomState, stratify=y)
-    print(f"Total classes: {len(labelMap)}")
+    print(f"Total classes post-filtering: {len(labelMap)}")
     print(f"Train samples: {X_train.shape[0]}")
     print(f"Test samples: {X_test.shape[0]}")
     return X_train, X_test, y_train, y_test, labelMap
-
-if __name__ == "__main__":
-    root_dirs = ['indian-face-dataset/train', 'indian-face-dataset/val']
-    X_train, X_test, y_train, y_test, label_map = createSplit(root_dirs)
