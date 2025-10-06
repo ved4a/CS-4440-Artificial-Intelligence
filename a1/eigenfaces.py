@@ -56,3 +56,5 @@ class Eigenfaces:
         coeffs = A @ self.eigenfaces
         return coeffs
     
+    def reconstruct(self, coeffs):
+        return coeffs @ self.eigenfaces.T + self.meanFace
