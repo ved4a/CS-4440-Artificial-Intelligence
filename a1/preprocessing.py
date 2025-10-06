@@ -41,6 +41,15 @@ def mergeFolders(rootDirectories, tempMergedDirectory="merged_faces"):
                             shutil.copy(imagePath, targetPath)
     return tempMergedDirectory
 
+# when counting avg # of images per folder, remove outliers to prevent skew
+def removeOutliers(counts):
+    counts = np.array(counts)
+    q1, q3 = np.percentile(counts, [25, 75])
+    iqr = q3 - q1
+    lower_bound = q1 - 1.5 * iqr
+    upper_bound = q3 + 1.5 * iqr
+    filtered = counts[(counts >= lower_bound) & (counts <= upper_bound)]
+    return filtered
 
 def loadImages(rootDirectories, size=(100, 100)):
     images, labels = [],[]
