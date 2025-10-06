@@ -47,3 +47,12 @@ class Eigenfaces:
         self.eigenfaces = eigenfaces
         self.eigenvalues = eigenvalues
         print("Retained {self.eigenfaces.shape[1]} Eigenfaces.")
+
+    def project(self, X):
+        if self.meanFace is None or self.eigenfaces is None:
+            raise ValueError("Model not fitted yet. Call fit(X) first.")
+        
+        A = (X - self.meanFace)
+        coeffs = A @ self.eigenfaces
+        return coeffs
+    
