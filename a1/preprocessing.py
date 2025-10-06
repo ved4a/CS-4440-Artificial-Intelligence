@@ -52,29 +52,44 @@ def removeOutliers(counts):
     return filtered
 
 def loadImages(rootDirectories, size=(100, 100)):
+    # process images from merged folder(s)
+    mergedDir = mergeFolders(rootDirectories)
+
+    # remove folders (aka people) w/ only a few photos
+    # "few" being defined as < avg (removing outliers)
+    imageCounts = {}
+    for person in os.listdir(mergedDir):
+        personPath = os.path.join(mergedDir, person)
+        if not os.path.isdir(personPath):
+            continue
+        count = sum(len(glob.glob(os.path.join(personPath, ext))) for ext in ("*.jpg", "*.png", "*.jpeg"))
+        imageCounts[person] = count
+    
+    filteredCounts = removeOutliers(list(imageCounts.values()))
+    avgCount = np.mean(filteredCounts)
+    print(f"Average # images per person (excluding outliers): {avgCount:.2f}")
+
+    validPeople = [p for p, c in imageCounts.items() if c >= avgCount]
+    print(f"Selected {len(validPeople)} people with ≥ average images")
+
+    # load the images
     images, labels = [],[]
     labelMap = {}
     counter  = 0
 
-    for rootDirectory in rootDirectories:
-        for person in os.listdir(rootDirectory):
-            personPath = os.path.join(rootDirectory, person)
-            if not os.path.isdir(personPath):
-                continue
+    for person in validPeople:
+        personPath = os.path.join(mergedDir, person)
+        labelMap[person] = counter
+        counter += 1
 
-            canonical = canonicalizeName(person)
-            if canonical not in labelMap:
-                labelMap[canonical] = counter
-                counter += 1
-
-            for ext in ("*.jpg", "*.png", "*.jpeg"):
-                for imagePath in glob.glob(os.path.join(personPath, ext)):
-                    image = cv2.imread(imagePath, cv2.IMREAD_GRAYSCALE)
-                    if image is None:
-                        continue
-                    imageResized = cv2.resize(image, size)
-                    images.append(imageResized.flatten())
-                    labels.append(labelMap[canonical])
+        for ext in ("*.jpg", "*.png", "*.jpeg"):
+            for imagePath in glob.glob(os.path.join(personPath, ext)):
+                image = cv2.imread(imagePath, cv2.IMREAD_GRAYSCALE)
+                if image is None:
+                    continue
+                imageResized = cv2.resize(image, size)
+                images.append(imageResized.flatten())
+                labels.append(labelMap[person])
     
     images = np.array(images)
     labels = np.array(labels)
