@@ -18,3 +18,13 @@ class FaceDataset(Dataset):
         return torch.tensor(img, dtype=torch.float32), label
 
 # load dataset
+root_dirs = ['a1/indian-face-dataset/train', 'a1/indian-face-dataset/val']
+images, labels, label_map = loadImages(root_dirs, size=(100, 100))
+dataset = FaceDataset(images, labels)
+dataloader = DataLoader(dataset, batch_size=64, shuffle=True)
+
+# initialize model & optimizer
+device = 'cpu'
+model = FaceNet(embedding_size=128).to(device)
+optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+criterion = torch.nn.CrossEntropyLoss()
