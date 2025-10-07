@@ -28,3 +28,19 @@ device = 'cpu'
 model = FaceNet(embedding_size=128).to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
 criterion = torch.nn.CrossEntropyLoss()
+
+# trainin loop
+model.train()
+for epoch in range(5):
+    for batch_imgs, batch_labels in dataloader:
+        batch_imgs, batch_labels = batch_imgs.to(device), batch_labels.to(device)
+        optimizer.zero_grad()
+        embeddings = model(batch_imgs)
+        logits = embeddings @ embeddings.T
+        loss = criterion(logits, batch_labels)
+        loss.backward()
+        optimizer.step()
+        print(f"Epoch {epoch+1}/5, Loss: {loss.item():.4f}")
+
+# save
+model.save('results/facenet_model.pth')
