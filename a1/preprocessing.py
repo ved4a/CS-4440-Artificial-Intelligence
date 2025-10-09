@@ -28,7 +28,7 @@ def mergeFolders(rootDirectories, tempMergedDirectory="merged_faces"):
             mergedPersonPath = os.path.join(tempMergedDirectory, canonical)
             os.makedirs(mergedPersonPath, exist_ok=True)
 
-            for ext in ("*.jpg", "*.png", ".jpeg"):
+            for ext in ("*.jpg", "*.png", "*.jpeg", "*.JPG", "*.PNG", "*.JPEG"):
                 for imagePath in glob.glob(os.path.join(personPath, ext)):
                     imageName = os.path.basename(imagePath)
                     targetPath = os.path.join(mergedPersonPath, imageName)
@@ -62,7 +62,7 @@ def loadImages(rootDirectories, size=(100, 100)):
         personPath = os.path.join(mergedDir, person)
         if not os.path.isdir(personPath):
             continue
-        count = sum(len(glob.glob(os.path.join(personPath, ext))) for ext in ("*.jpg", "*.png", "*.jpeg"))
+        count = sum(len(glob.glob(os.path.join(personPath, ext))) for ext in ("*.jpg", "*.png", "*.jpeg", "*.JPG", "*.PNG", "*.JPEG"))
         imageCounts[person] = count
     
     filteredCounts = removeOutliers(list(imageCounts.values()))
@@ -82,7 +82,7 @@ def loadImages(rootDirectories, size=(100, 100)):
         labelMap[person] = counter
         counter += 1
 
-        for ext in ("*.jpg", "*.png", "*.jpeg"):
+        for ext in ("*.jpg", "*.png", "*.jpeg", "*.JPG", "*.PNG", "*.JPEG"):
             for imagePath in glob.glob(os.path.join(personPath, ext)):
                 image = cv2.imread(imagePath, cv2.IMREAD_GRAYSCALE)
                 if image is None:
