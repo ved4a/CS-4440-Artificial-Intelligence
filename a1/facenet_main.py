@@ -7,6 +7,7 @@ from sklearn.neighbors import KNeighborsClassifier
 
 from facenet import FaceNet
 from preprocessing import createSplit
+from metrics import classification_summary, rank_k_identification 
 
 
 class FaceDataset(Dataset):
@@ -84,13 +85,40 @@ def main():
     acc = accuracy_score(y_test, preds)
     print(f"FaceNet embedding kNN accuracy: {acc*100:.2f}%")
 
-    cm = confusion_matrix(y_test, preds)
-    report = classification_report(y_test, preds)
+    # classification summary (precision/recall/F1 + confusion matrix)
+    summary = classification_summary(y_test, preds, labels=np.unique(y_train), print_report=True)
+    cm = summary["confusion_matrix"]
+    with open(os.path.join(results_dir, 'facenet_classification_report.txt'), 'w') as f:
+        f.write(summary["report_text"])
+    np.savetxt(os.path.join(results_dir, 'facenet_confusion_matrix.csv'), cm, fmt='%d', delimiter=',')
+
+    # identification rates (rank-1 == accuracy, rank-5)
+    ir = rank_k_identification(train_emb, y_train, test_emb, y_test, ks=(1, 5))
+    rank1 = ir["rank_1"]
+    rank5 = ir["rank_5"]
+    print(f"Identification rate (Rank-1): {rank1*100:.2f}%")
+    print(f"Identification rate (Rank-5): {rank5*100:.2f}%")
+
+     # save embeddings and metrics
     np.save(os.path.join(results_dir, 'facenet_train_embeddings.npy'), train_emb)
     np.save(os.path.join(results_dir, 'facenet_test_embeddings.npy'), test_emb)
-    np.savetxt(os.path.join(results_dir, 'facenet_confusion_matrix.csv'), cm, fmt='%d', delimiter=',')
-    with open(os.path.join(results_dir, 'facenet_classification_report.txt'), 'w') as f:
-        f.write(report)
+
+     # write a compact metrics CSV
+    header = "accuracy,balanced_accuracy,precision_macro,recall_macro,f1_macro,precision_weighted,recall_weighted,f1_weighted,rank1,rank5"
+    values = [
+        summary["accuracy"],
+        summary["balanced_accuracy"],
+        summary["precision_macro"],
+        summary["recall_macro"],
+        summary["f1_macro"],
+        summary["precision_weighted"],
+        summary["recall_weighted"],
+        summary["f1_weighted"],
+        rank1,
+        rank5,
+    ]
+
+    np.savetxt(os.path.join(results_dir, 'facenet_metrics.csv'), np.array([values]), delimiter=',', header=header, comments='')
 
 
 if __name__ == '__main__':
