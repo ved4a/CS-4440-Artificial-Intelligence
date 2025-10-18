@@ -22,6 +22,32 @@ def ensure_dir(p):
     os.makedirs(p, exist_ok=True)
 
 
+def knn_top1_chunked(train_feats: np.ndarray, train_labels: np.ndarray, test_feats: np.ndarray, chunk: int = 256) -> np.ndarray:
+    T = train_feats.astype(np.float32, copy=False)
+    TL2 = np.sum(T*T, axis=1, keepdims=True).T  # [1, n_train]
+    preds = []
+    for i in range(0, test_feats.shape[0], chunk):
+        Q = test_feats[i:i+chunk].astype(np.float32, copy=False)
+        QL2 = np.sum(Q*Q, axis=1, keepdims=True)  # [m, 1]
+        # D^2 = ||Q||^2 + ||T||^2 - 2 Q T^T
+        G = Q @ T.T
+        D2 = QL2 + TL2 - 2.0 * G
+        idx = np.argmin(D2, axis=1)
+        preds.append(train_labels[idx])
+    return np.concatenate(preds, axis=0)
+
+
+def embed_images_facenet(model: FaceNet, X_flat: np.ndarray, size: Tuple[int, int], batch_size: int = 256) -> np.ndarray:
+    H, W = size
+    X = (X_flat.astype(np.float32) / 255.0).reshape(-1, 1, H, W)
+    embs = []
+    with torch.no_grad():
+        for i in range(0, X.shape[0], batch_size):
+            batch = torch.from_numpy(X[i:i+batch_size])
+            embs.append(model(batch).cpu().numpy())
+    return np.vstack(embs).astype(np.float32, copy=False)
+
+
 def evaluate_eigenfaces_under(X_train, y_train, X_test, y_test, model_path, size, variant_name, transform_fn=None, transform_kwargs=None):
     model = Eigenfaces.load(model_path)
 
@@ -98,32 +124,30 @@ def main(dataset_choice='indian'):
     size = (100, 100)
     X_train, X_test, y_train, y_test, label_map = createSplit(root_dirs, testSize=0.3, size=size)
 
-    # Baseline accuracies
+    # Baseline accuracies (optimized: precompute projections/embeddings and avoid Python loops)
     eigen_model_path = os.path.join('A1', 'results', 'eigenfaces_model.npz')
     from sklearn.metrics import accuracy_score
-    # baseline eigenfaces
     eig_model = Eigenfaces.load(eigen_model_path)
-    base_preds_eig = eig_model.recognize(X_train, y_train, X_test)
+    # Precompute train/test PCA projections once
+    eigen_train_feats = eig_model.project(X_train).astype(np.float32, copy=False)
+    eigen_test_feats = eig_model.project(X_test).astype(np.float32, copy=False)
+    base_preds_eig = knn_top1_chunked(eigen_train_feats, y_train, eigen_test_feats, chunk=256)
     base_acc_eig = accuracy_score(y_test, base_preds_eig)
 
     # FaceNet baseline uses saved embeddings
     facenet_model_path = os.path.join('A1', 'results', 'facenet_model.pth')
     train_emb_path = os.path.join('A1', 'results', 'facenet_train_embeddings.npy')
     test_emb_path = os.path.join('A1', 'results', 'facenet_test_embeddings.npy')
+    # Load FaceNet once and reuse
+    model_fn = FaceNet(embedding_size=128)
+    model_fn.load(facenet_model_path, device='cpu')
+    model_fn.eval()
     if os.path.exists(train_emb_path) and os.path.exists(test_emb_path):
-        train_emb = np.load(train_emb_path)
-        test_emb = np.load(test_emb_path)
+        train_emb = np.load(train_emb_path).astype(np.float32, copy=False)
+        test_emb = np.load(test_emb_path).astype(np.float32, copy=False)
     else:
-        # fallback: compute quickly using current model
-        import torch
-        from facenet_main import FaceDataset, embed_all
-        from torch.utils.data import DataLoader
-        model = FaceNet(embedding_size=128)
-        model.load(facenet_model_path, device='cpu')
-        full_train_loader = DataLoader(FaceDataset(X_train, size), batch_size=256, shuffle=False)
-        test_loader = DataLoader(FaceDataset(X_test, size), batch_size=256, shuffle=False)
-        train_emb = embed_all(model, full_train_loader, device='cpu')
-        test_emb = embed_all(model, test_loader, device='cpu')
+        train_emb = embed_images_facenet(model_fn, X_train, size, batch_size=256)
+        test_emb = embed_images_facenet(model_fn, X_test, size, batch_size=256)
     knn = KNeighborsClassifier(n_neighbors=1, metric='euclidean')
     knn.fit(train_emb, y_train)
     base_preds_fn = knn.predict(test_emb)
@@ -141,24 +165,14 @@ def main(dataset_choice='indian'):
     lighting_results_fn = {}
     for name, cfg in lighting_configs.items():
         X_test_var = apply_to_batch(X_test, size, cfg['transform_fn'], **cfg.get('transform_kwargs', {}))
-        preds_eig = eig_model.recognize(X_train, y_train, X_test_var)
+        # reuse precomputed eigen_train_feats; only project transformed test
+        eigen_test_var = eig_model.project(X_test_var).astype(np.float32, copy=False)
+        preds_eig = knn_top1_chunked(eigen_train_feats, y_train, eigen_test_var, chunk=256)
         acc_eig = accuracy_score(y_test, preds_eig)
         lighting_results_eig[name] = acc_eig
 
         # FaceNet: recompute embeddings for transformed test
-        H, W = size
-        Xf = X_test_var.astype(np.float32) / 255.0
-        Xf = Xf.reshape(-1, 1, H, W)
-        import torch
-        model = FaceNet(128)
-        model.load(facenet_model_path, device='cpu')
-        model.eval()
-        embs = []
-        bs = 256
-        with torch.no_grad():
-            for i in range(0, Xf.shape[0], bs):
-                embs.append(model(torch.from_numpy(Xf[i:i+bs])).cpu().numpy())
-        test_emb_var = np.vstack(embs)
+        test_emb_var = embed_images_facenet(model_fn, X_test_var, size, batch_size=256)
         preds_fn = knn.predict(test_emb_var)
         acc_fn = accuracy_score(y_test, preds_fn)
         lighting_results_fn[name] = acc_fn
@@ -179,21 +193,13 @@ def main(dataset_choice='indian'):
     quality_results_fn = {}
     for name, cfg in quality_configs.items():
         X_test_var = apply_to_batch(X_test, size, cfg['fn'], **cfg['kw'])
-        acc_eig = accuracy_score(y_test, eig_model.recognize(X_train, y_train, X_test_var))
+        eigen_test_var = eig_model.project(X_test_var).astype(np.float32, copy=False)
+        preds_eig = knn_top1_chunked(eigen_train_feats, y_train, eigen_test_var, chunk=256)
+        acc_eig = accuracy_score(y_test, preds_eig)
         quality_results_eig[name] = acc_eig
 
         # FaceNet transformed embeddings
-        H, W = size
-        Xf = X_test_var.astype(np.float32).reshape(-1, 1, H, W) / 255.0
-        import torch
-        model = FaceNet(128)
-        model.load(facenet_model_path, device='cpu')
-        model.eval()
-        embs = []
-        with torch.no_grad():
-            for i in range(0, Xf.shape[0], 256):
-                embs.append(model(torch.from_numpy(Xf[i:i+256])).cpu().numpy())
-        test_emb_var = np.vstack(embs)
+        test_emb_var = embed_images_facenet(model_fn, X_test_var, size, batch_size=256)
         acc_fn = accuracy_score(y_test, knn.predict(test_emb_var))
         quality_results_fn[name] = acc_fn
 
@@ -212,20 +218,12 @@ def main(dataset_choice='indian'):
     occ_results_fn = {}
     for name, cfg in occ_configs.items():
         X_test_var = apply_to_batch(X_test, size, cfg['fn'], **cfg['kw'])
-        acc_eig = accuracy_score(y_test, eig_model.recognize(X_train, y_train, X_test_var))
+        eigen_test_var = eig_model.project(X_test_var).astype(np.float32, copy=False)
+        preds_eig = knn_top1_chunked(eigen_train_feats, y_train, eigen_test_var, chunk=256)
+        acc_eig = accuracy_score(y_test, preds_eig)
         occ_results_eig[name] = acc_eig
 
-        H, W = size
-        Xf = X_test_var.astype(np.float32).reshape(-1, 1, H, W) / 255.0
-        import torch
-        model = FaceNet(128)
-        model.load(facenet_model_path, device='cpu')
-        model.eval()
-        embs = []
-        with torch.no_grad():
-            for i in range(0, Xf.shape[0], 256):
-                embs.append(model(torch.from_numpy(Xf[i:i+256])).cpu().numpy())
-        test_emb_var = np.vstack(embs)
+        test_emb_var = embed_images_facenet(model_fn, X_test_var, size, batch_size=256)
         acc_fn = accuracy_score(y_test, knn.predict(test_emb_var))
         occ_results_fn[name] = acc_fn
 
