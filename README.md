@@ -6,4 +6,4 @@ Repo for "Artificial Intelligence" taken in Spring 2025.
 
 The full write-up with methods, metrics, robustness/bias analyses, and embedded figures is available at:
 
--   [A1/REPORT.md](A1/REPORT.md)
+-   [A1/REPORT.md](A1\REPORT.md)
