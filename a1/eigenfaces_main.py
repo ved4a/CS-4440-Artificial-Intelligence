@@ -1,9 +1,10 @@
 import numpy as np
 from preprocessing import createSplit
 from eigenfaces import Eigenfaces
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+from sklearn.metrics import accuracy_score
 import os
 import cv2
+from metrics import classification_summary, rank_k_identification
 
 def main():
     print("Step 1: Loading and preprocessing dataset")
@@ -44,12 +45,37 @@ def main():
     acc = accuracy_score(y_test, preds)
     print(f"\nRESULT: Recognition accuracy: {acc * 100:.2f}%")
 
-    # log confusion matrix and classification report
-    cm = confusion_matrix(y_test, preds)
-    report = classification_report(y_test, preds)
+    # detailed metrics via shared helper
+    summary = classification_summary(y_test, preds, labels=np.unique(y_train), print_report=True)
+    cm = summary["confusion_matrix"]
     np.savetxt(os.path.join(results_dir, 'eigenfaces_confusion_matrix.csv'), cm, fmt='%d', delimiter=',')
     with open(os.path.join(results_dir, 'eigenfaces_classification_report.txt'), 'w') as f:
-        f.write(report)
+        f.write(summary["report_text"])
+
+    # compute Rank-1/Rank-5 identification rates using PCA projections
+    train_feats = model.project(X_train)
+    test_feats = model.project(X_test)
+    ir = rank_k_identification(train_feats, y_train, test_feats, y_test, ks=(1, 5))
+    rank1 = ir["rank_1"]
+    rank5 = ir["rank_5"]
+    print(f"Identification rate (Rank-1): {rank1*100:.2f}%")
+    print(f"Identification rate (Rank-5): {rank5*100:.2f}%")
+
+    # persist a compact metrics CSV for easy comparison
+    header = "accuracy,balanced_accuracy,precision_macro,recall_macro,f1_macro,precision_weighted,recall_weighted,f1_weighted,rank1,rank5"
+    values = [
+        summary["accuracy"],
+        summary["balanced_accuracy"],
+        summary["precision_macro"],
+        summary["recall_macro"],
+        summary["f1_macro"],
+        summary["precision_weighted"],
+        summary["recall_weighted"],
+        summary["f1_weighted"],
+        rank1,
+        rank5,
+    ]
+    np.savetxt(os.path.join(results_dir, 'eigenfaces_metrics.csv'), np.array([values]), delimiter=',', header=header, comments='')
 
 if __name__ == "__main__":
     main()
