@@ -243,7 +243,10 @@ def main(dataset_choice='indian'):
         # progressive reconstructions by truncating coeffs
         for k in k_list:
             c_trunc = coeffs[:, :k]
-            recon = eig_model.reconstruct(c_trunc).reshape(H, W)
+            # Use matching top-k eigenfaces for reconstruction to avoid dimension mismatch
+            E_k = eig_model.eigenfaces[:, :k]
+            recon = (c_trunc @ E_k.T) + eig_model.meanFace
+            recon = recon.reshape(H, W)
             orig = x.reshape(H, W)
             vis = np.hstack([
                 (orig - orig.min())/(orig.max()-orig.min()+1e-8),
@@ -363,7 +366,7 @@ def main(dataset_choice='indian'):
             # boxplot
             plt.figure(figsize=(4,4))
             data = [sims_m if len(sims_m)>0 else [np.nan], sims_f if len(sims_f)>0 else [np.nan]]
-            plt.boxplot(data, labels=['male','female'])
+            plt.boxplot(data, tick_labels=['male','female'])
             plt.ylabel('Cosine sim(orig, transformed)')
             plt.title('FaceNet self-consistency by gender (CelebA)')
             plt.tight_layout()
