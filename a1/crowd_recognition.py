@@ -8,6 +8,7 @@ from facenet import FaceNet
 from eigenfaces import Eigenfaces
 from detectors import detect_faces
 from robustness_eval import embed_images_facenet, knn_top1_chunked
+from preprocessing import canonicalizeName
 
 
 def ensure_dir(p):
@@ -92,8 +93,23 @@ def main():
         import csv
         with open(labels_csv, 'r', newline='') as f:
             r = csv.DictReader(f)
+            # normalize header names to avoid KeyError when headers have spaces (e.g., "image, gt_name")
+            image_key = None
+            gt_key = None
+            if r.fieldnames:
+                field_map = { (h or '').strip().lower(): (h or '') for h in r.fieldnames }
+                image_key = field_map.get('image')
+                # allow a few alternatives for convenience
+                gt_key = field_map.get('gt_name') or field_map.get('gt') or field_map.get('label') or field_map.get('name')
             for row in r:
-                gt[row['image']] = row['gt_name']
+                if not row:
+                    continue
+                img_name = (row.get(image_key, '') or '').strip() if image_key else (row.get('image', '') or '').strip()
+                name_raw = (row.get(gt_key, '') or '').strip() if gt_key else (row.get('gt_name', '') or '').strip()
+                # canonicalize to match preprocessing label_map style (lowercase, remove non-letters)
+                name_canon = canonicalizeName(name_raw) if name_raw else ''
+                if img_name:
+                    gt[img_name] = name_canon
 
     for img_path in glob.glob(os.path.join(crowd_dir, '*.*')):
         img = cv2.imread(img_path)
