@@ -13,3 +13,6 @@ a2/__pycache__/
 
 # virtual env
 venv
+
+# files that are too large
+a2/artifacts/modeling/models/
