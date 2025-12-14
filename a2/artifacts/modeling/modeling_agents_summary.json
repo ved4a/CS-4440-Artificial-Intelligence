@@ -1,0 +1,90 @@
+{
+  "generated_at": "2025-12-05T17:00:02.197273",
+  "agent_name": "Modeling Agents (ensemble)",
+  "models": {
+    "baseline_logistic_regression": {
+      "agent_role": "baseline",
+      "balanced_accuracy": 0.8546942580168283,
+      "macro_f1": 0.8503014772157292,
+      "calibrated": false,
+      "artifacts": {
+        "model": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\baseline_logistic_regression.joblib",
+        "metadata": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\baseline_logistic_regression_metadata.json",
+        "probabilities": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\baseline_logistic_regression_probabilities.csv"
+      }
+    },
+    "baseline_decision_tree": {
+      "agent_role": "baseline",
+      "balanced_accuracy": 0.9081511044716013,
+      "macro_f1": 0.9106303100275112,
+      "calibrated": true,
+      "artifacts": {
+        "model": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\baseline_decision_tree.joblib",
+        "metadata": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\baseline_decision_tree_metadata.json",
+        "probabilities": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\baseline_decision_tree_probabilities.csv"
+      }
+    },
+    "trainer_random_forest": {
+      "agent_role": "trainer",
+      "balanced_accuracy": 0.906010772677742,
+      "macro_f1": 0.9085324811606714,
+      "calibrated": true,
+      "artifacts": {
+        "model": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_random_forest.joblib",
+        "metadata": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_random_forest_metadata.json",
+        "probabilities": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_random_forest_probabilities.csv"
+      }
+    },
+    "trainer_xgboost": {
+      "agent_role": "trainer",
+      "balanced_accuracy": 0.9126563507638226,
+      "macro_f1": 0.9164259534711788,
+      "calibrated": true,
+      "artifacts": {
+        "model": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_xgboost.joblib",
+        "metadata": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_xgboost_metadata.json",
+        "probabilities": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_xgboost_probabilities.csv"
+      }
+    },
+    "trainer_lightgbm": {
+      "agent_role": "trainer",
+      "balanced_accuracy": 0.9126569236218183,
+      "macro_f1": 0.9156380174857377,
+      "calibrated": true,
+      "artifacts": {
+        "model": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_lightgbm.joblib",
+        "metadata": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_lightgbm_metadata.json",
+        "probabilities": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_lightgbm_probabilities.csv"
+      }
+    },
+    "trainer_mlp_classifier": {
+      "agent_role": "trainer",
+      "balanced_accuracy": 0.9140865364477815,
+      "macro_f1": 0.9180220288330037,
+      "calibrated": true,
+      "artifacts": {
+        "model": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_mlp_classifier.joblib",
+        "metadata": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_mlp_classifier_metadata.json",
+        "probabilities": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_mlp_classifier_probabilities.csv"
+      }
+    }
+  },
+  "feature_names": [
+    "SessionIntensity",
+    "SessionConsistency",
+    "SessionsPerWeek",
+    "EngagementScore",
+    "AvgSessionDurationMinutes",
+    "PurchaseRate",
+    "PlayTimeHours",
+    "AchievementsPerHour",
+    "LevelProgressionRate",
+    "AchievementsUnlocked"
+  ],
+  "classes": [
+    "High",
+    "Low",
+    "Medium"
+  ],
+  "comparison_csv": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\model_comparison.csv"
+}

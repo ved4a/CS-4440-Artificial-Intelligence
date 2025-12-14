@@ -1,0 +1,165 @@
+{
+  "model_name": "trainer_xgboost",
+  "agent_role": "trainer",
+  "metrics": {
+    "accuracy": 0.9211939552891221,
+    "balanced_accuracy": 0.9126563507638226,
+    "macro_f1": 0.9164259534711788,
+    "log_loss": 0.31734509317519577,
+    "brier_score": 0.048083864975060696,
+    "roc_auc_ovr": 0.9447800772264884,
+    "per_class": {
+      "High": {
+        "precision": 0.9207622868605817,
+        "recall": 0.888243831640058,
+        "f1": 0.9042107855208077,
+        "support": 2067
+      },
+      "Low": {
+        "precision": 0.9179436480474543,
+        "recall": 0.899273607748184,
+        "f1": 0.9085127201565558,
+        "support": 2065
+      },
+      "Medium": {
+        "precision": 0.9230576441102757,
+        "recall": 0.9504516129032258,
+        "f1": 0.9365543547361729,
+        "support": 3875
+      }
+    },
+    "confusion_matrix": [
+      [
+        1836,
+        73,
+        158
+      ],
+      [
+        59,
+        1857,
+        149
+      ],
+      [
+        99,
+        93,
+        3683
+      ]
+    ],
+    "classification_report": {
+      "High": {
+        "precision": 0.9207622868605817,
+        "recall": 0.888243831640058,
+        "f1-score": 0.9042107855208077,
+        "support": 2067.0
+      },
+      "Low": {
+        "precision": 0.9179436480474543,
+        "recall": 0.899273607748184,
+        "f1-score": 0.9085127201565558,
+        "support": 2065.0
+      },
+      "Medium": {
+        "precision": 0.9230576441102757,
+        "recall": 0.9504516129032258,
+        "f1-score": 0.9365543547361729,
+        "support": 3875.0
+      },
+      "accuracy": 0.9211939552891221,
+      "macro avg": {
+        "precision": 0.9205878596727706,
+        "recall": 0.9126563507638226,
+        "f1-score": 0.9164259534711788,
+        "support": 8007.0
+      },
+      "weighted avg": {
+        "precision": 0.9211462034577411,
+        "recall": 0.9211939552891221,
+        "f1-score": 0.920972971824337,
+        "support": 8007.0
+      }
+    }
+  },
+  "hyperparameters": {
+    "objective": "multi:softprob",
+    "base_score": null,
+    "booster": null,
+    "callbacks": null,
+    "colsample_bylevel": null,
+    "colsample_bynode": null,
+    "colsample_bytree": 0.9,
+    "device": null,
+    "early_stopping_rounds": null,
+    "enable_categorical": false,
+    "eval_metric": "mlogloss",
+    "feature_types": null,
+    "feature_weights": null,
+    "gamma": null,
+    "grow_policy": null,
+    "importance_type": null,
+    "interaction_constraints": null,
+    "learning_rate": 0.08,
+    "max_bin": null,
+    "max_cat_threshold": null,
+    "max_cat_to_onehot": null,
+    "max_delta_step": null,
+    "max_depth": 6,
+    "max_leaves": null,
+    "min_child_weight": null,
+    "missing": NaN,
+    "monotone_constraints": null,
+    "multi_strategy": null,
+    "n_estimators": 350,
+    "n_jobs": -1,
+    "num_parallel_tree": null,
+    "random_state": 42,
+    "reg_alpha": null,
+    "reg_lambda": 1.0,
+    "sampling_method": null,
+    "scale_pos_weight": null,
+    "subsample": 0.9,
+    "tree_method": null,
+    "validate_parameters": null,
+    "verbosity": null,
+    "use_label_encoder": false
+  },
+  "calibrated": true,
+  "feature_names": [
+    "SessionIntensity",
+    "SessionConsistency",
+    "SessionsPerWeek",
+    "EngagementScore",
+    "AvgSessionDurationMinutes",
+    "PurchaseRate",
+    "PlayTimeHours",
+    "AchievementsPerHour",
+    "LevelProgressionRate",
+    "AchievementsUnlocked"
+  ],
+  "class_labels": [
+    "High",
+    "Low",
+    "Medium"
+  ],
+  "artifacts": {
+    "model_path": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_xgboost.joblib",
+    "probabilities_path": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_xgboost_probabilities.csv"
+  },
+  "trained_at": "2025-12-05T16:59:39.777872",
+  "train_duration_seconds": 4.160420656204224,
+  "evaluation_split": {
+    "train_size": 32027,
+    "test_size": 8007
+  },
+  "features_used": [
+    "SessionIntensity",
+    "SessionConsistency",
+    "SessionsPerWeek",
+    "EngagementScore",
+    "AvgSessionDurationMinutes",
+    "PurchaseRate",
+    "PlayTimeHours",
+    "AchievementsPerHour",
+    "LevelProgressionRate",
+    "AchievementsUnlocked"
+  ]
+}

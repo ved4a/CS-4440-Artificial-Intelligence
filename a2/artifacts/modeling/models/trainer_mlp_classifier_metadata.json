@@ -1,0 +1,150 @@
+{
+  "model_name": "trainer_mlp_classifier",
+  "agent_role": "trainer",
+  "metrics": {
+    "accuracy": 0.9229424253777945,
+    "balanced_accuracy": 0.9140865364477815,
+    "macro_f1": 0.9180220288330037,
+    "log_loss": 0.3154357473865088,
+    "brier_score": 0.047533385073239336,
+    "roc_auc_ovr": 0.9426195894299839,
+    "per_class": {
+      "High": {
+        "precision": 0.9208416833667334,
+        "recall": 0.8892114175133043,
+        "f1": 0.9047501845926655,
+        "support": 2067
+      },
+      "Low": {
+        "precision": 0.9216269841269841,
+        "recall": 0.8997578692493947,
+        "f1": 0.9105611369762313,
+        "support": 2065
+      },
+      "Medium": {
+        "precision": 0.9246558197747184,
+        "recall": 0.9532903225806452,
+        "f1": 0.9387547649301143,
+        "support": 3875
+      }
+    },
+    "confusion_matrix": [
+      [
+        1838,
+        74,
+        155
+      ],
+      [
+        61,
+        1858,
+        146
+      ],
+      [
+        97,
+        84,
+        3694
+      ]
+    ],
+    "classification_report": {
+      "High": {
+        "precision": 0.9208416833667334,
+        "recall": 0.8892114175133043,
+        "f1-score": 0.9047501845926655,
+        "support": 2067.0
+      },
+      "Low": {
+        "precision": 0.9216269841269841,
+        "recall": 0.8997578692493947,
+        "f1-score": 0.9105611369762313,
+        "support": 2065.0
+      },
+      "Medium": {
+        "precision": 0.9246558197747184,
+        "recall": 0.9532903225806452,
+        "f1-score": 0.9387547649301143,
+        "support": 3875.0
+      },
+      "accuracy": 0.9229424253777945,
+      "macro avg": {
+        "precision": 0.9223748290894785,
+        "recall": 0.9140865364477815,
+        "f1-score": 0.9180220288330037,
+        "support": 8007.0
+      },
+      "weighted avg": {
+        "precision": 0.922890069110565,
+        "recall": 0.9229424253777945,
+        "f1-score": 0.9227053944689834,
+        "support": 8007.0
+      }
+    }
+  },
+  "hyperparameters": {
+    "activation": "relu",
+    "alpha": 0.001,
+    "batch_size": 64,
+    "beta_1": 0.9,
+    "beta_2": 0.999,
+    "early_stopping": true,
+    "epsilon": 1e-08,
+    "hidden_layer_sizes": [
+      128,
+      64
+    ],
+    "learning_rate": "constant",
+    "learning_rate_init": 0.001,
+    "max_fun": 15000,
+    "max_iter": 300,
+    "momentum": 0.9,
+    "n_iter_no_change": 10,
+    "nesterovs_momentum": true,
+    "power_t": 0.5,
+    "random_state": 42,
+    "shuffle": true,
+    "solver": "adam",
+    "tol": 0.0001,
+    "validation_fraction": 0.1,
+    "verbose": false,
+    "warm_start": false
+  },
+  "calibrated": true,
+  "feature_names": [
+    "SessionIntensity",
+    "SessionConsistency",
+    "SessionsPerWeek",
+    "EngagementScore",
+    "AvgSessionDurationMinutes",
+    "PurchaseRate",
+    "PlayTimeHours",
+    "AchievementsPerHour",
+    "LevelProgressionRate",
+    "AchievementsUnlocked"
+  ],
+  "class_labels": [
+    "High",
+    "Low",
+    "Medium"
+  ],
+  "artifacts": {
+    "model_path": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_mlp_classifier.joblib",
+    "probabilities_path": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\trainer_mlp_classifier_probabilities.csv"
+  },
+  "trained_at": "2025-12-05T17:00:02.196834",
+  "train_duration_seconds": 17.623287677764893,
+  "evaluation_split": {
+    "train_size": 32027,
+    "test_size": 8007
+  },
+  "features_used": [
+    "SessionIntensity",
+    "SessionConsistency",
+    "SessionsPerWeek",
+    "EngagementScore",
+    "AvgSessionDurationMinutes",
+    "PurchaseRate",
+    "PlayTimeHours",
+    "AchievementsPerHour",
+    "LevelProgressionRate",
+    "AchievementsUnlocked"
+  ]
+}

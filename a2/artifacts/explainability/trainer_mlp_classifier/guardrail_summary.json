@@ -1,0 +1,9 @@
+{
+  "total_records": 100,
+  "class_distribution": {
+    "High": 25,
+    "Low": 28,
+    "Medium": 47
+  },
+  "average_confidence": 0.9157320813693307
+}

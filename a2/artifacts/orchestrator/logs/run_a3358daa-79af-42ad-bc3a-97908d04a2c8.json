@@ -1,0 +1,101 @@
+{
+  "run_id": "a3358daa-79af-42ad-bc3a-97908d04a2c8",
+  "label": "smoke-test",
+  "version": 1,
+  "created_at": "2025-12-05T12:42:01.426932",
+  "context": {
+    "ingestion": {
+      "rows": 1000
+    },
+    "validation": {
+      "status": "ok"
+    },
+    "features": {
+      "num_features": 10
+    },
+    "modeling": {
+      "best_model": "trainer_random_forest"
+    },
+    "explainability": {
+      "global_importance_path": "artifacts/explainability/global_importance.json"
+    },
+    "recommendation": {
+      "num_recommendations": 200
+    }
+  },
+  "events": [
+    {
+      "timestamp": "2025-12-05T12:42:01.427158",
+      "event": "agent_completed",
+      "details": {
+        "agent": "ingestion",
+        "stage": "ingestion",
+        "attempt": 1,
+        "result_keys": [
+          "ingestion"
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-05T12:42:01.427221",
+      "event": "agent_completed",
+      "details": {
+        "agent": "validation",
+        "stage": "validation",
+        "attempt": 1,
+        "result_keys": [
+          "validation"
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-05T12:42:01.427292",
+      "event": "agent_completed",
+      "details": {
+        "agent": "feature_engineering",
+        "stage": "feature_engineering",
+        "attempt": 1,
+        "result_keys": [
+          "features"
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-05T12:42:01.427465",
+      "event": "agent_completed",
+      "details": {
+        "agent": "model_training",
+        "stage": "model_training",
+        "attempt": 1,
+        "result_keys": [
+          "modeling"
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-05T12:42:01.427636",
+      "event": "agent_completed",
+      "details": {
+        "agent": "explainability",
+        "stage": "explainability",
+        "attempt": 1,
+        "result_keys": [
+          "explainability"
+        ]
+      }
+    },
+    {
+      "timestamp": "2025-12-05T12:42:01.427792",
+      "event": "agent_completed",
+      "details": {
+        "agent": "recommendation",
+        "stage": "recommendation",
+        "attempt": 1,
+        "result_keys": [
+          "recommendation"
+        ]
+      }
+    }
+  ],
+  "status": "succeeded"
+}

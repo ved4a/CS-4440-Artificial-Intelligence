@@ -1,0 +1,42 @@
+[
+  {
+    "scenario": "LowPlayHighSpend",
+    "predicted_label": 2,
+    "max_probability": 0.718114700337042,
+    "probabilities": {
+      "High": 0.10704453575298847,
+      "Low": 0.1748407639099696,
+      "Medium": 0.718114700337042
+    }
+  },
+  {
+    "scenario": "HighPlayLowAchievements",
+    "predicted_label": 2,
+    "max_probability": 0.8341196148057755,
+    "probabilities": {
+      "High": 0.0422048763207728,
+      "Low": 0.1236755088734518,
+      "Medium": 0.8341196148057755
+    }
+  },
+  {
+    "scenario": "HighLevelNoActivity",
+    "predicted_label": 2,
+    "max_probability": 0.718114700337042,
+    "probabilities": {
+      "High": 0.10704453575298847,
+      "Low": 0.1748407639099696,
+      "Medium": 0.718114700337042
+    }
+  },
+  {
+    "scenario": "LongSessionsNoPurchases",
+    "predicted_label": 2,
+    "max_probability": 0.9997139970922458,
+    "probabilities": {
+      "High": 0.00021110706931977503,
+      "Low": 7.489583843439498e-05,
+      "Medium": 0.9997139970922458
+    }
+  }
+]

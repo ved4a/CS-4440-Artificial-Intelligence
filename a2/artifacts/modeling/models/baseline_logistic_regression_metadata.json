@@ -1,0 +1,139 @@
+{
+  "model_name": "baseline_logistic_regression",
+  "agent_role": "baseline",
+  "metrics": {
+    "accuracy": 0.8531285125515174,
+    "balanced_accuracy": 0.8546942580168283,
+    "macro_f1": 0.8503014772157292,
+    "log_loss": 0.525184740768397,
+    "brier_score": 0.08650884424852417,
+    "roc_auc_ovr": 0.9297587525904007,
+    "per_class": {
+      "High": {
+        "precision": 0.8573452999527633,
+        "recall": 0.8780841799709724,
+        "f1": 0.8675908221797323,
+        "support": 2067
+      },
+      "Low": {
+        "precision": 0.8013888888888889,
+        "recall": 0.8382566585956417,
+        "f1": 0.8194082840236686,
+        "support": 2065
+      },
+      "Medium": {
+        "precision": 0.8806970509383378,
+        "recall": 0.847741935483871,
+        "f1": 0.863905325443787,
+        "support": 3875
+      }
+    },
+    "confusion_matrix": [
+      [
+        1815,
+        76,
+        176
+      ],
+      [
+        65,
+        1731,
+        269
+      ],
+      [
+        237,
+        353,
+        3285
+      ]
+    ],
+    "classification_report": {
+      "High": {
+        "precision": 0.8573452999527633,
+        "recall": 0.8780841799709724,
+        "f1-score": 0.8675908221797323,
+        "support": 2067.0
+      },
+      "Low": {
+        "precision": 0.8013888888888889,
+        "recall": 0.8382566585956417,
+        "f1-score": 0.8194082840236686,
+        "support": 2065.0
+      },
+      "Medium": {
+        "precision": 0.8806970509383378,
+        "recall": 0.847741935483871,
+        "f1-score": 0.863905325443787,
+        "support": 3875.0
+      },
+      "accuracy": 0.8531285125515174,
+      "macro avg": {
+        "precision": 0.8464770799266633,
+        "recall": 0.8546942580168283,
+        "f1-score": 0.8503014772157292,
+        "support": 8007.0
+      },
+      "weighted avg": {
+        "precision": 0.8542152944853225,
+        "recall": 0.8531285125515174,
+        "f1-score": 0.8533809756524362,
+        "support": 8007.0
+      }
+    }
+  },
+  "hyperparameters": {
+    "C": 1.0,
+    "class_weight": "balanced",
+    "dual": false,
+    "fit_intercept": true,
+    "intercept_scaling": 1,
+    "l1_ratio": null,
+    "max_iter": 1000,
+    "multi_class": "multinomial",
+    "n_jobs": null,
+    "penalty": "l2",
+    "random_state": 42,
+    "solver": "lbfgs",
+    "tol": 0.0001,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "calibrated": false,
+  "feature_names": [
+    "SessionIntensity",
+    "SessionConsistency",
+    "SessionsPerWeek",
+    "EngagementScore",
+    "AvgSessionDurationMinutes",
+    "PurchaseRate",
+    "PlayTimeHours",
+    "AchievementsPerHour",
+    "LevelProgressionRate",
+    "AchievementsUnlocked"
+  ],
+  "class_labels": [
+    "High",
+    "Low",
+    "Medium"
+  ],
+  "artifacts": {
+    "model_path": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\baseline_logistic_regression.joblib",
+    "probabilities_path": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\baseline_logistic_regression_probabilities.csv"
+  },
+  "trained_at": "2025-12-05T16:59:30.829258",
+  "train_duration_seconds": 0.10788297653198242,
+  "evaluation_split": {
+    "train_size": 32027,
+    "test_size": 8007
+  },
+  "features_used": [
+    "SessionIntensity",
+    "SessionConsistency",
+    "SessionsPerWeek",
+    "EngagementScore",
+    "AvgSessionDurationMinutes",
+    "PurchaseRate",
+    "PlayTimeHours",
+    "AchievementsPerHour",
+    "LevelProgressionRate",
+    "AchievementsUnlocked"
+  ]
+}

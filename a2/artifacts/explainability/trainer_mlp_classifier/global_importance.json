@@ -1,0 +1,58 @@
+{
+  "classes": {
+    "High": [
+      {
+        "feature": "SessionIntensity",
+        "importance": 0.25318332644086783
+      },
+      {
+        "feature": "SessionsPerWeek",
+        "importance": 0.2437330254399515
+      },
+      {
+        "feature": "SessionConsistency",
+        "importance": 0.1407659064030075
+      }
+    ],
+    "Low": [
+      {
+        "feature": "SessionConsistency",
+        "importance": 0.09019330215007473
+      },
+      {
+        "feature": "SessionsPerWeek",
+        "importance": 0.08268759623806445
+      },
+      {
+        "feature": "SessionIntensity",
+        "importance": 0.012954687665665368
+      }
+    ],
+    "Medium": [
+      {
+        "feature": "SessionsPerWeek",
+        "importance": 0.05564339516485532
+      },
+      {
+        "feature": "SessionIntensity",
+        "importance": 0.03130539141459218
+      },
+      {
+        "feature": "SessionConsistency",
+        "importance": 0.025220050909513028
+      }
+    ]
+  },
+  "feature_names": [
+    "SessionIntensity",
+    "SessionConsistency",
+    "SessionsPerWeek",
+    "EngagementScore",
+    "AvgSessionDurationMinutes",
+    "PurchaseRate",
+    "PlayTimeHours",
+    "AchievementsPerHour",
+    "LevelProgressionRate",
+    "AchievementsUnlocked"
+  ]
+}

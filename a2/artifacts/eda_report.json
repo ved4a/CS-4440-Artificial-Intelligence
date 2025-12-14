@@ -1,0 +1,386 @@
+{
+  "descriptive_statistics": {
+    "numeric_summary": {
+      "Age": {
+        "count": 40034.0,
+        "mean": 31.9925313483539,
+        "std": 10.043226791634682,
+        "min": 15.0,
+        "25%": 23.0,
+        "50%": 32.0,
+        "75%": 41.0,
+        "max": 49.0
+      },
+      "PlayTimeHours": {
+        "count": 40034.0,
+        "mean": 12.024365373325825,
+        "std": 6.914637905333831,
+        "min": 0.0001146866199155,
+        "25%": 6.067500507750126,
+        "50%": 12.00800215801307,
+        "75%": 17.963831138295756,
+        "max": 23.99959163358045
+      },
+      "InGamePurchases": {
+        "count": 40034.0,
+        "mean": 0.20085427386721286,
+        "std": 0.4006442861498505,
+        "min": 0.0,
+        "25%": 0.0,
+        "50%": 0.0,
+        "75%": 0.0,
+        "max": 1.0
+      },
+      "SessionsPerWeek": {
+        "count": 40034.0,
+        "mean": 9.471773992106709,
+        "std": 5.763667125348519,
+        "min": 0.0,
+        "25%": 4.0,
+        "50%": 9.0,
+        "75%": 14.0,
+        "max": 19.0
+      },
+      "AvgSessionDurationMinutes": {
+        "count": 40034.0,
+        "mean": 94.79225158615178,
+        "std": 49.0113745387013,
+        "min": 10.0,
+        "25%": 52.0,
+        "50%": 95.0,
+        "75%": 137.0,
+        "max": 179.0
+      },
+      "PlayerLevel": {
+        "count": 40034.0,
+        "mean": 49.65556776739771,
+        "std": 28.58837914040544,
+        "min": 1.0,
+        "25%": 25.0,
+        "50%": 49.0,
+        "75%": 74.0,
+        "max": 99.0
+      },
+      "AchievementsUnlocked": {
+        "count": 40034.0,
+        "mean": 24.52647749412999,
+        "std": 14.43072617762337,
+        "min": 0.0,
+        "25%": 12.0,
+        "50%": 25.0,
+        "75%": 37.0,
+        "max": 49.0
+      }
+    },
+    "categorical_summary": {
+      "Gender": {
+        "unique_values": 2,
+        "top_values": {
+          "Male": 23959,
+          "Female": 16075
+        },
+        "value_distribution": {
+          "Male": 23959,
+          "Female": 16075
+        }
+      },
+      "Location": {
+        "unique_values": 4,
+        "top_values": {
+          "USA": 16000,
+          "EUROPE": 12004,
+          "ASIA": 8095,
+          "OTHER": 3935
+        },
+        "value_distribution": {
+          "USA": 16000,
+          "EUROPE": 12004,
+          "ASIA": 8095,
+          "OTHER": 3935
+        }
+      },
+      "GameGenre": {
+        "unique_values": 5,
+        "top_values": {
+          "SPORTS": 8048,
+          "ACTION": 8039,
+          "STRATEGY": 8012,
+          "SIMULATION": 7983,
+          "RPG": 7952
+        },
+        "value_distribution": {
+          "SPORTS": 8048,
+          "ACTION": 8039,
+          "STRATEGY": 8012,
+          "SIMULATION": 7983,
+          "RPG": 7952
+        }
+      },
+      "GameDifficulty": {
+        "unique_values": 3,
+        "top_values": {
+          "Easy": 20015,
+          "Medium": 12011,
+          "Hard": 8008
+        },
+        "value_distribution": {
+          "Easy": 20015,
+          "Medium": 12011,
+          "Hard": 8008
+        }
+      }
+    },
+    "missing_data": {},
+    "correlation_matrix": {
+      "Age": {
+        "Age": 1.0,
+        "PlayTimeHours": 0.0024621150724288728,
+        "InGamePurchases": -0.0001858950184860478,
+        "SessionsPerWeek": 0.008777320196304655,
+        "AvgSessionDurationMinutes": -0.002268809790554712,
+        "PlayerLevel": 0.0013525896859643426,
+        "AchievementsUnlocked": -0.0011004060268742935
+      },
+      "PlayTimeHours": {
+        "Age": 0.0024621150724288728,
+        "PlayTimeHours": 1.0,
+        "InGamePurchases": -0.006066544774614458,
+        "SessionsPerWeek": -0.0036552518709911993,
+        "AvgSessionDurationMinutes": -0.0019250447896054501,
+        "PlayerLevel": -0.005151519857843861,
+        "AchievementsUnlocked": 0.003913040687180502
+      },
+      "InGamePurchases": {
+        "Age": -0.0001858950184860478,
+        "PlayTimeHours": -0.006066544774614458,
+        "InGamePurchases": 1.0,
+        "SessionsPerWeek": 0.005132494613199603,
+        "AvgSessionDurationMinutes": -0.0030587917246306206,
+        "PlayerLevel": 0.006524300224253718,
+        "AchievementsUnlocked": 9.761956695794842e-05
+      },
+      "SessionsPerWeek": {
+        "Age": 0.008777320196304655,
+        "PlayTimeHours": -0.0036552518709911993,
+        "InGamePurchases": 0.005132494613199603,
+        "SessionsPerWeek": 1.0,
+        "AvgSessionDurationMinutes": -0.0006198975927789662,
+        "PlayerLevel": 0.003257430187915914,
+        "AchievementsUnlocked": 0.0031868988049271116
+      },
+      "AvgSessionDurationMinutes": {
+        "Age": -0.002268809790554712,
+        "PlayTimeHours": -0.0019250447896054501,
+        "InGamePurchases": -0.0030587917246306206,
+        "SessionsPerWeek": -0.0006198975927789662,
+        "AvgSessionDurationMinutes": 1.0,
+        "PlayerLevel": 0.001367623127572716,
+        "AchievementsUnlocked": -0.0022269548483127804
+      },
+      "PlayerLevel": {
+        "Age": 0.0013525896859643426,
+        "PlayTimeHours": -0.005151519857843861,
+        "InGamePurchases": 0.006524300224253718,
+        "SessionsPerWeek": 0.003257430187915914,
+        "AvgSessionDurationMinutes": 0.001367623127572716,
+        "PlayerLevel": 1.0,
+        "AchievementsUnlocked": 0.0063425026292066675
+      },
+      "AchievementsUnlocked": {
+        "Age": -0.0011004060268742935,
+        "PlayTimeHours": 0.003913040687180502,
+        "InGamePurchases": 9.761956695794842e-05,
+        "SessionsPerWeek": 0.0031868988049271116,
+        "AvgSessionDurationMinutes": -0.0022269548483127804,
+        "PlayerLevel": 0.0063425026292066675,
+        "AchievementsUnlocked": 1.0
+      }
+    }
+  },
+  "target_analysis": {
+    "class_distribution": {
+      "counts": {
+        "Medium": 19374,
+        "High": 10336,
+        "Low": 10324
+      },
+      "percentages": {
+        "Medium": 48.39386521456762,
+        "High": 25.818054653544486,
+        "Low": 25.7880801318879
+      }
+    },
+    "class_balance": {
+      "imbalance_ratio": 1.87659821774506,
+      "is_balanced": true,
+      "recommendation": "Classes are reasonably balanced"
+    },
+    "cross_tabulations": {
+      "Gender": {
+        "High": {
+          "Female": 26.102643856920682,
+          "Male": 25.627112984682164
+        },
+        "Low": {
+          "Female": 25.63608087091757,
+          "Male": 25.890062189573854
+        },
+        "Medium": {
+          "Female": 48.26127527216174,
+          "Male": 48.48282482574398
+        }
+      },
+      "Location": {
+        "High": {
+          "ASIA": 26.324891908585546,
+          "EUROPE": 25.558147284238586,
+          "OTHER": 25.667090216010163,
+          "USA": 25.79375
+        },
+        "Low": {
+          "ASIA": 25.423100679431748,
+          "EUROPE": 26.182939020326558,
+          "OTHER": 26.327827191867854,
+          "USA": 25.54375
+        },
+        "Medium": {
+          "ASIA": 48.2520074119827,
+          "EUROPE": 48.258913695434856,
+          "OTHER": 48.00508259212199,
+          "USA": 48.662499999999994
+        }
+      },
+      "GameGenre": {
+        "High": {
+          "ACTION": 25.67483517850479,
+          "RPG": 25.0,
+          "SIMULATION": 26.356006513841912,
+          "SPORTS": 25.88220675944334,
+          "STRATEGY": 26.173240139790316
+        },
+        "Low": {
+          "ACTION": 25.61263838785919,
+          "RPG": 26.370724346076457,
+          "SIMULATION": 26.155580608793688,
+          "SPORTS": 25.77037773359841,
+          "STRATEGY": 25.03744383424863
+        },
+        "Medium": {
+          "ACTION": 48.71252643363602,
+          "RPG": 48.62927565392354,
+          "SIMULATION": 47.4884128773644,
+          "SPORTS": 48.34741550695825,
+          "STRATEGY": 48.78931602596106
+        }
+      },
+      "GameDifficulty": {
+        "High": {
+          "Easy": 25.640769422932802,
+          "Hard": 26.373626373626376,
+          "Medium": 25.74306885355091
+        },
+        "Low": {
+          "Easy": 26.010492130901824,
+          "Hard": 25.92407592407592,
+          "Medium": 25.326783781533596
+        },
+        "Medium": {
+          "Easy": 48.34873844616537,
+          "Hard": 47.7022977022977,
+          "Medium": 48.93014736491549
+        }
+      }
+    }
+  },
+  "feature_quality": {
+    "feature_importance": [
+      {
+        "feature": "SessionIntensity",
+        "mi_score": 0.6802969874733296
+      },
+      {
+        "feature": "SessionConsistency",
+        "mi_score": 0.4358312239182729
+      },
+      {
+        "feature": "SessionsPerWeek",
+        "mi_score": 0.2777421318381803
+      },
+      {
+        "feature": "EngagementScore",
+        "mi_score": 0.2605379237359631
+      },
+      {
+        "feature": "AvgSessionDurationMinutes",
+        "mi_score": 0.17185543947781645
+      },
+      {
+        "feature": "PurchaseRate",
+        "mi_score": 0.021481643947803608
+      },
+      {
+        "feature": "PlayTimeHours",
+        "mi_score": 0.0070591096553827
+      },
+      {
+        "feature": "AchievementsPerHour",
+        "mi_score": 0.0032155367693640358
+      },
+      {
+        "feature": "LevelProgressionRate",
+        "mi_score": 0.0030240068304023815
+      },
+      {
+        "feature": "AchievementsUnlocked",
+        "mi_score": 0.0019150672156682536
+      },
+      {
+        "feature": "InGamePurchases",
+        "mi_score": 0.00016183406266612188
+      },
+      {
+        "feature": "PlayerLevel",
+        "mi_score": 0.00014556662940923282
+      },
+      {
+        "feature": "Age",
+        "mi_score": 0.0
+      },
+      {
+        "feature": "IsPayer",
+        "mi_score": 0.0
+      }
+    ],
+    "low_variance_features": [],
+    "high_correlation_pairs": [
+      {
+        "feature1": "InGamePurchases",
+        "feature2": "IsPayer",
+        "correlation": 1.0
+      },
+      {
+        "feature1": "SessionsPerWeek",
+        "feature2": "EngagementScore",
+        "correlation": 0.9862005354945238
+      }
+    ],
+    "recommendations": {
+      "top_features": [
+        "SessionIntensity",
+        "SessionConsistency",
+        "SessionsPerWeek",
+        "EngagementScore",
+        "AvgSessionDurationMinutes",
+        "PurchaseRate",
+        "PlayTimeHours",
+        "AchievementsPerHour",
+        "LevelProgressionRate",
+        "AchievementsUnlocked"
+      ],
+      "features_to_drop": [
+        "IsPayer",
+        "EngagementScore"
+      ]
+    }
+  }
+}

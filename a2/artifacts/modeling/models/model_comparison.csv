@@ -1,0 +1,7 @@
+model,agent,balanced_accuracy,macro_f1
+trainer_mlp_classifier,trainer,0.9140865364477815,0.9180220288330037
+trainer_lightgbm,trainer,0.9126569236218183,0.9156380174857377
+trainer_xgboost,trainer,0.9126563507638226,0.9164259534711788
+baseline_decision_tree,baseline,0.9081511044716013,0.9106303100275112
+trainer_random_forest,trainer,0.906010772677742,0.9085324811606714
+baseline_logistic_regression,baseline,0.8546942580168283,0.8503014772157292

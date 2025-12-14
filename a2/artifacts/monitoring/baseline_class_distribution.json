@@ -1,0 +1,10 @@
+{
+  "created_at": "2025-12-05T17:00:04.763761",
+  "model_name": "trainer_mlp_classifier",
+  "accuracy": 0.9229424253777945,
+  "class_distribution": {
+    "Medium": 0.48395154240039967,
+    "High": 0.25814911952041963,
+    "Low": 0.2578993380791807
+  }
+}

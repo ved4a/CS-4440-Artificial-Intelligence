@@ -1,0 +1,137 @@
+{
+  "model_name": "baseline_decision_tree",
+  "agent_role": "baseline",
+  "metrics": {
+    "accuracy": 0.915199200699388,
+    "balanced_accuracy": 0.9081511044716013,
+    "macro_f1": 0.9106303100275112,
+    "log_loss": 0.33937039921209866,
+    "brier_score": 0.052015338156189056,
+    "roc_auc_ovr": 0.9403264588136354,
+    "per_class": {
+      "High": {
+        "precision": 0.9159579789894947,
+        "recall": 0.8858248669569424,
+        "f1": 0.9006394490900148,
+        "support": 2067
+      },
+      "Low": {
+        "precision": 0.9027710257656781,
+        "recall": 0.899273607748184,
+        "f1": 0.901018922852984,
+        "support": 2065
+      },
+      "Medium": {
+        "precision": 0.9212857504429258,
+        "recall": 0.9393548387096774,
+        "f1": 0.9302325581395349,
+        "support": 3875
+      }
+    },
+    "confusion_matrix": [
+      [
+        1831,
+        74,
+        162
+      ],
+      [
+        59,
+        1857,
+        149
+      ],
+      [
+        109,
+        126,
+        3640
+      ]
+    ],
+    "classification_report": {
+      "High": {
+        "precision": 0.9159579789894947,
+        "recall": 0.8858248669569424,
+        "f1-score": 0.9006394490900148,
+        "support": 2067.0
+      },
+      "Low": {
+        "precision": 0.9027710257656781,
+        "recall": 0.899273607748184,
+        "f1-score": 0.901018922852984,
+        "support": 2065.0
+      },
+      "Medium": {
+        "precision": 0.9212857504429258,
+        "recall": 0.9393548387096774,
+        "f1-score": 0.9302325581395349,
+        "support": 3875.0
+      },
+      "accuracy": 0.915199200699388,
+      "macro avg": {
+        "precision": 0.9133382517326996,
+        "recall": 0.9081511044716013,
+        "f1-score": 0.9106303100275112,
+        "support": 8007.0
+      },
+      "weighted avg": {
+        "precision": 0.9151354556942362,
+        "recall": 0.915199200699388,
+        "f1-score": 0.9150589458912415,
+        "support": 8007.0
+      }
+    }
+  },
+  "hyperparameters": {
+    "ccp_alpha": 0.0,
+    "class_weight": "balanced",
+    "criterion": "gini",
+    "max_depth": 12,
+    "max_features": null,
+    "max_leaf_nodes": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 3,
+    "min_samples_split": 15,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "random_state": 42,
+    "splitter": "best"
+  },
+  "calibrated": true,
+  "feature_names": [
+    "SessionIntensity",
+    "SessionConsistency",
+    "SessionsPerWeek",
+    "EngagementScore",
+    "AvgSessionDurationMinutes",
+    "PurchaseRate",
+    "PlayTimeHours",
+    "AchievementsPerHour",
+    "LevelProgressionRate",
+    "AchievementsUnlocked"
+  ],
+  "class_labels": [
+    "High",
+    "Low",
+    "Medium"
+  ],
+  "artifacts": {
+    "model_path": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\baseline_decision_tree.joblib",
+    "probabilities_path": "C:\\Users\\pink1\\Repos\\ai-course\\a2\\artifacts\\modeling\\models\\baseline_decision_tree_probabilities.csv"
+  },
+  "trained_at": "2025-12-05T16:59:31.365694",
+  "train_duration_seconds": 0.5043482780456543,
+  "evaluation_split": {
+    "train_size": 32027,
+    "test_size": 8007
+  },
+  "features_used": [
+    "SessionIntensity",
+    "SessionConsistency",
+    "SessionsPerWeek",
+    "EngagementScore",
+    "AvgSessionDurationMinutes",
+    "PurchaseRate",
+    "PlayTimeHours",
+    "AchievementsPerHour",
+    "LevelProgressionRate",
+    "AchievementsUnlocked"
+  ]
+}
