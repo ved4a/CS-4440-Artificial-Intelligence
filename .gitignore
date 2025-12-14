@@ -2,7 +2,14 @@
 a1/indian-face-dataset/
 
 # subset of indian face dataset (no repeats)
-merged-faces/
+merged_faces/
 
 # celebA dataset
-celeb-a/
+a1/celeb-a/
+
+# python cache
+a1/__pycache__/
+a2/__pycache__/
+
+# virtual env
+venv
